@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OGEDestroyer.API;
 
 namespace OGEDestroyer
 {
@@ -14,9 +15,15 @@ namespace OGEDestroyer
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new Form1());
+
+            var questionNumber = 0;
+            Int32.TryParse(Console.ReadLine(), out questionNumber);
+            Console.WriteLine(AnswerParse.GetAnswer(questionNumber));
+
+            Console.ReadKey();
         }
     }
 }
