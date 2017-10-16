@@ -28,18 +28,19 @@ namespace OGEDestroyer.API
                 webClient.Headers.Set(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1");
                 webClient.Encoding = Encoding.UTF8;
 
-                try
-                {
+                //try
+                //{
                     HtmlDocument doc = new HtmlDocument();
+                    
                     doc.LoadHtml(webClient.DownloadString(url));
 
                     htmlText = doc.GetElementbyId("sol" + answerId).InnerText;
                     htmlText.Replace("&shy;", "");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                //}
+                //catch (Exception e)
+                //{
+                    //Console.WriteLine(e);
+                //}
             }
 
             return htmlText.ToLower();
@@ -59,14 +60,11 @@ namespace OGEDestroyer.API
                 int indexPattern = answerText.IndexOf(Pattern[1]) + Pattern[1].Length;
 
                 int dotIndex = answerText.IndexOf('.', indexPattern);
+
                 if (dotIndex == -1)
-                {
                     answer = answerText.Substring(indexPattern, answerText.Length - indexPattern);
-                }
                 else
-                {
                     answer = answerText.Substring(indexPattern, dotIndex - indexPattern);
-                }
             }
             else if (answerText.Contains(Pattern[2]) && answerText.Contains(Pattern[3]))
             {
@@ -80,21 +78,21 @@ namespace OGEDestroyer.API
 
         private static string FormatAnswer(string answer)
         {
+            if (answer.Contains(" или "))
+                answer = answer.Substring(answer.LastIndexOf(" или ") + " или ".Length);
+
             var formattedAnswer = Regex.Replace(answer, "[,. ]+", string.Empty);
 
             if (Regex.Replace(formattedAnswer, "\\D", string.Empty).Length >= 2)
-            {
                 Regex.Replace(formattedAnswer, "\\D", string.Empty);
-            }
             else if(formattedAnswer.Contains("|"))
             {
                 var lastIndex = formattedAnswer.LastIndexOf("|") + 1;
-                formattedAnswer = formattedAnswer.Substring(lastIndex, formattedAnswer.Length - lastIndex);
+                formattedAnswer = formattedAnswer.Substring(lastIndex);
             }
-            else if(formattedAnswer.Contains("или"))
-            {
-                formattedAnswer = formattedAnswer.Substring(formattedAnswer.LastIndexOf("или") + 3, formattedAnswer.Length - formattedAnswer.LastIndexOf("или") + 3);
-            }
+
+            formattedAnswer.Replace("<", string.Empty);
+            formattedAnswer.Replace(">", string.Empty);
 
             return formattedAnswer;
         }

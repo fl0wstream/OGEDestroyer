@@ -19,9 +19,11 @@ namespace OGEDestroyer
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
 
-            var questionNumber = 0;
-            Int32.TryParse(Console.ReadLine(), out questionNumber);
-            Console.WriteLine(AnswerParse.GetAnswer(questionNumber));
+            //var questionNumber = 0;
+            //Int32.TryParse(Console.ReadLine(), out questionNumber);
+            //Console.WriteLine(AnswerParse.GetAnswer(questionNumber));
+
+            var test = new Test(7222593, 4898975, 4044);
 
             Console.ReadKey();
         }
